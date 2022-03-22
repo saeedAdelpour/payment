@@ -13,22 +13,43 @@ class TransactionType(DjangoObjectType):
 
 
 class PersonType(DjangoObjectType):
+    dept = graphene.Float()
+
     class Meta:
         model = Person
         fields = ["id", "name"]
 
 
+class ComputePaymentType(graphene.ObjectType):
+    debtor = graphene.Field(PersonType)
+    creditor = graphene.Field(PersonType)
+    price = graphene.Float()
+
+
 class PersonAppQuery:
     persons = graphene.List(PersonType)
+    compute_payments = graphene.List(ComputePaymentType)
 
     def resolve_persons(parent, info):
         return Person.objects.all()
 
+    def resolve_compute_payments(parent, info):
+        persons = list(Person.objects.all().compute_dept())
+        creditors = list(filter(lambda p: p.dept > 0, persons))
+        debtors = list(filter(lambda p: p.dept < 0, persons))
 
-class PaymentQuery(DjangoObjectType):
-    class Meta:
-        model = Payment
-        fields = ["id", "description", "created_at"]
+        transactions = []
+        for creditor in creditors:
+            for debtor in debtors:
+                price = min(abs(debtor.dept), abs(creditor.dept))
+                if price == 0:
+                    continue
+                transactions.append(
+                    ComputePaymentType(debtor=debtor, creditor=creditor, price=price)
+                )
+                debtor.dept += price
+
+        return transactions
 
 
 class CreatePersonMutation(graphene.Mutation):
