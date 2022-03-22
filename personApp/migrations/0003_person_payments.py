@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
             model_name="person",
             name="payments",
             field=models.ManyToManyField(
-                through="personApp.PersonPayment", to="personApp.Payment"
+                through="personApp.Transaction", to="personApp.Payment"
             ),
         ),
     ]

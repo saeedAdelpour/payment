@@ -3,12 +3,12 @@ from graphene_django import DjangoObjectType
 
 from django.db import transaction
 
-from .models import Person, Payment, PersonPayment
+from .models import Person, Payment, Transaction
 
 
-class PersonPaymentType(DjangoObjectType):
+class TransactionType(DjangoObjectType):
     class Meta:
-        model = PersonPayment
+        model = Transaction
         fields = "__all__"
 
 
@@ -54,7 +54,7 @@ class CreateTransactionMutation(graphene.Mutation):
 
     @transaction.atomic
     def mutate(self, info, description, price, persons, paid_person):
-        PersonPayment.objects.create_transaction(
+        Transaction.objects.create_transaction(
             description,
             price,
             persons,

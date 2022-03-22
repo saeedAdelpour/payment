@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name="PersonPayment",
+            name="Transaction",
             fields=[
                 (
                     "id",
