@@ -1,11 +1,13 @@
 import graphene
 
+from personApp.schema import PersonAppQuery, PersonAppMutation
 
-class Query(graphene.ObjectType):
+
+class Query(PersonAppQuery, graphene.ObjectType):
     pass
 
 
-class Mutation(graphene.ObjectType):
+class Mutation(PersonAppMutation, graphene.ObjectType):
     pass
 
 
