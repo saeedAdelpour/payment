@@ -11,4 +11,4 @@ class personPayment(models.Model):
     payment = models.ForeignKey("Payment", on_delete=models.CASCADE)
     price = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(choices=personPaymentStatusChoices, max_length=20)
+    status = models.CharField(choices=personPaymentStatusChoices.choices, max_length=20)
