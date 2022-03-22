@@ -9,13 +9,13 @@ from .models import Person, Payment, Transaction
 class TransactionType(DjangoObjectType):
     class Meta:
         model = Transaction
-        fields = "__all__"
+        fields = ["id", "person", "payment", "price", "created_at", "status"]
 
 
 class PersonType(DjangoObjectType):
     class Meta:
         model = Person
-        fields = "__all__"
+        fields = ["id", "name"]
 
 
 class PersonAppQuery:
@@ -28,7 +28,7 @@ class PersonAppQuery:
 class PaymentQuery(DjangoObjectType):
     class Meta:
         model = Payment
-        fields = "__all__"
+        fields = ["id", "description", "created_at"]
 
 
 class CreatePersonMutation(graphene.Mutation):
