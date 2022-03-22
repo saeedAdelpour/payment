@@ -1,7 +1,15 @@
 import graphene
 from graphene_django import DjangoObjectType
 
-from .models import Person
+from django.db import transaction
+
+from .models import Person, Payment, PersonPayment
+
+
+class PersonPaymentType(DjangoObjectType):
+    class Meta:
+        model = PersonPayment
+        fields = "__all__"
 
 
 class PersonType(DjangoObjectType):
@@ -17,6 +25,12 @@ class PersonAppQuery:
         return Person.objects.all()
 
 
+class PaymentQuery(DjangoObjectType):
+    class Meta:
+        model = Payment
+        fields = "__all__"
+
+
 class CreatePersonMutation(graphene.Mutation):
     class Arguments:
         name = graphene.String()
@@ -29,5 +43,27 @@ class CreatePersonMutation(graphene.Mutation):
         return CreatePersonMutation(person=person, created=created)
 
 
+class CreateTransactionMutation(graphene.Mutation):
+    class Arguments:
+        description = graphene.String()
+        price = graphene.Float()
+        persons = graphene.List(graphene.ID)
+        paid_person = graphene.ID()
+
+    succes = graphene.Boolean()
+
+    @transaction.atomic
+    def mutate(self, info, description, price, persons, paid_person):
+        PersonPayment.objects.create_transaction(
+            description,
+            price,
+            persons,
+            paid_person,
+        )
+
+        return CreateTransactionMutation(succes=True)
+
+
 class PersonAppMutation:
     create_person = CreatePersonMutation.Field()
+    create_transaction = CreateTransactionMutation.Field()
