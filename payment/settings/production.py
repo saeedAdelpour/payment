@@ -1,9 +1,6 @@
 from . import *
 
 
-SECRET_KEY = config("SECRET_KEY")
-DEBUG = config("DEBUG", cast=bool)
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -11,5 +8,8 @@ DATABASES = {
     }
 }
 
-
 ALLOWED_HOSTS = []
+
+
+SECRET_KEY = config("SECRET_KEY")
+DEBUG = config("DEBUG", cast=bool)

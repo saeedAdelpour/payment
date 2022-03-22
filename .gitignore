@@ -92,3 +92,5 @@ venv
 .vscode
 **/static/**
 **/media/**
+
+.pre-commit-config.yaml
