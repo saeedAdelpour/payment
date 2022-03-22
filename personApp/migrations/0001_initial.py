@@ -66,13 +66,15 @@ class Migration(migrations.Migration):
                 (
                     "payment",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="person.payment"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="personApp.payment",
                     ),
                 ),
                 (
                     "person",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="person.person"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="personApp.person",
                     ),
                 ),
             ],
