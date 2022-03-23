@@ -3,7 +3,7 @@ from graphene_django import DjangoObjectType
 
 from django.db import transaction
 
-from .models import Person, Payment, Transaction
+from .models import Person, Transaction
 
 
 class TransactionType(DjangoObjectType):
