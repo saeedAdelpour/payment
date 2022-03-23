@@ -71,7 +71,7 @@ class CreateTransactionMutation(graphene.Mutation):
         persons = graphene.List(graphene.ID)
         paid_person = graphene.ID()
 
-    succes = graphene.Boolean()
+    success = graphene.Boolean()
 
     @transaction.atomic
     def mutate(self, info, description, price, persons, paid_person):
@@ -82,7 +82,7 @@ class CreateTransactionMutation(graphene.Mutation):
             paid_person,
         )
 
-        return CreateTransactionMutation(succes=True)
+        return CreateTransactionMutation(success=True)
 
 
 class PersonAppMutation:
