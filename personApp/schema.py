@@ -13,7 +13,7 @@ class TransactionType(DjangoObjectType):
 
 
 class PersonType(DjangoObjectType):
-    dept = graphene.Float()
+    debt = graphene.Float()
 
     class Meta:
         model = Person
@@ -34,20 +34,20 @@ class PersonAppQuery:
         return Person.objects.all()
 
     def resolve_compute_payments(parent, info):
-        persons = list(Person.objects.all().compute_dept())
-        creditors = list(filter(lambda p: p.dept > 0, persons))
-        debtors = list(filter(lambda p: p.dept < 0, persons))
+        persons = list(Person.objects.all().compute_debt())
+        creditors = list(filter(lambda p: p.debt > 0, persons))
+        debtors = list(filter(lambda p: p.debt < 0, persons))
 
         transactions = []
         for creditor in creditors:
             for debtor in debtors:
-                price = min(abs(debtor.dept), abs(creditor.dept))
+                price = min(abs(debtor.debt), abs(creditor.debt))
                 if price == 0:
                     continue
                 transactions.append(
                     ComputePaymentType(debtor=debtor, creditor=creditor, price=price)
                 )
-                debtor.dept += price
+                debtor.debt += price
 
         return transactions
 

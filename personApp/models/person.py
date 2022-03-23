@@ -3,11 +3,11 @@ from django.db.models import Sum
 
 
 class PersonQuerySet(models.QuerySet):
-    def compute_dept(self):
+    def compute_debt(self):
         return (
-            self.annotate(dept=Sum("transactions__price"))
-            .exclude(dept=0)
-            .order_by("-dept")
+            self.annotate(debt=Sum("transactions__price"))
+            .exclude(debt=0)
+            .order_by("-debt")
         )
 
 

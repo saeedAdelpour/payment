@@ -1,6 +1,6 @@
 # payment App
 
-## Pay your depts with your friends easily with `payment` app
+## Pay your debts with your friends easily with `payment` app
 
 ### you can use this app to
 
