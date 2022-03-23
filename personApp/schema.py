@@ -47,6 +47,7 @@ class PersonAppQuery:
                 transactions.append(
                     ComputePaymentType(debtor=debtor, creditor=creditor, price=price)
                 )
+                creditor.debt -= price
                 debtor.debt += price
 
         return transactions
